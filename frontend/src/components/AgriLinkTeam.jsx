@@ -1,6 +1,30 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const AgriLinkTeam = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   const teamMembers = [
     {
       name: "Zaid Aslam Dhanse",
@@ -41,21 +65,79 @@ const AgriLinkTeam = () => {
       role: "Strategy & Communications Lead",
       responsibilities:
         "Narrative Integration, Storyboarding, Critical Review.",
-      image: "/images/gauri.jpg",
+      image: "images/gauri.jpg",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-40 via-sky-200 to-emerald-50/30 py-16 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-full mb-6">
+    <div
+      ref={sectionRef}
+      className="min-h-screen bg-gradient-to-br from-slate-50 via-sky-100 to-emerald-50/50 py-16 px-6 relative overflow-hidden"
+    >
+      {/* Parallax Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-emerald-200/20 rounded-full blur-3xl animate-pulse"></div>
+        <div
+          className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-sky-200/20 rounded-full blur-3xl animate-bounce"
+          style={{ animationDuration: "8s" }}
+        ></div>
+        <div
+          className="absolute top-1/3 right-1/3 w-64 h-64 bg-emerald-300/10 rounded-full blur-3xl animate-pulse"
+          style={{ animationDuration: "6s" }}
+        ></div>
+
+        {/* Floating leaves */}
+        <div
+          className="absolute top-20 left-10 opacity-20 animate-float"
+          style={{ animationDuration: "15s", animationDelay: "0s" }}
+        >
+          <svg
+            className="w-24 h-24 text-emerald-600"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+          </svg>
+        </div>
+        <div
+          className="absolute bottom-20 right-20 opacity-15 animate-float"
+          style={{ animationDuration: "18s", animationDelay: "2s" }}
+        >
+          <svg
+            className="w-20 h-20 text-emerald-700"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+          </svg>
+        </div>
+        <div
+          className="absolute top-40 right-40 opacity-10 animate-float"
+          style={{ animationDuration: "20s", animationDelay: "5s" }}
+        >
+          <svg
+            className="w-16 h-16 text-emerald-800"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+          </svg>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div
+          className={`text-center mb-16 transform transition-all duration-1000 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+          }`}
+        >
+          <div className="inline-flex items-center px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-full mb-6 shadow-sm hover:shadow-md transition-shadow duration-300">
             <span className="text-sm font-medium text-emerald-700">
-              Meet Our Team
+              👥 Meet Our Team
             </span>
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-4">
-            The AgriLink Team
+            The <span className="text-emerald-600">AgriLink</span> Team
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             Group of future innovators and entrepreneurs pacing towards a better
@@ -67,7 +149,12 @@ const AgriLinkTeam = () => {
           {teamMembers.map((member, index) => (
             <div
               key={index}
-              className="group bg-white rounded-2xl p-8 shadow-lg border border-emerald-100/50 hover:shadow-xl hover:border-emerald-200 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105"
+              className={`group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-emerald-100/50 hover:shadow-xl hover:border-emerald-200 transition-all duration-500 transform ${
+                isVisible
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-10 opacity-0"
+              }`}
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
               <div className="flex flex-col items-center text-center">
                 <div className="relative mb-6">
@@ -86,6 +173,10 @@ const AgriLinkTeam = () => {
 
                 <p className="text-emerald-600 font-semibold mb-4 text-sm uppercase tracking-wide">
                   {member.role}
+                </p>
+
+                <p className="text-slate-600 text-sm mb-4 leading-relaxed">
+                  {member.responsibilities}
                 </p>
 
                 <div className="flex space-x-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -129,7 +220,49 @@ const AgriLinkTeam = () => {
             </div>
           ))}
         </div>
+
+        {/* Team Stats */}
+        <div
+          className={`mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 text-center ${
+            isVisible ? "opacity-100" : "opacity-0"
+          } transition-opacity duration-1000 delay-700`}
+        >
+          {[
+            { value: "6", label: "Team Members" },
+            { value: "100%", label: "Rural and Unemployed Benefits" },
+            { value: "100%", label: "Dedication" },
+            { value: "∞", label: "Innovation" },
+          ].map((stat, index) => (
+            <div
+              key={index}
+              className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-emerald-100/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+            >
+              <div className="text-3xl font-bold text-emerald-700">
+                {stat.value}
+              </div>
+              <div className="text-slate-600 mt-2">{stat.label}</div>
+            </div>
+          ))}
+        </div>
       </div>
+
+      {/* Animations */}
+      <style jsx>{`
+        @keyframes float {
+          0% {
+            transform: translateY(0) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-20px) rotate(5deg);
+          }
+          100% {
+            transform: translateY(0) rotate(0deg);
+          }
+        }
+        .animate-float {
+          animation: float 8s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 };
